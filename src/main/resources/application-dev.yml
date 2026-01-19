@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    # 這裡的 url 格式：jdbc:postgresql://[您的Host]/[您的DB名稱]?sslmode=require
+    # 注意：Neon 強制要求 SSL，所以後面一定要加 ?sslmode=require
+    url: jdbc:postgresql://ep-cold-breeze-a16jmu1p.ap-southeast-1.aws.neon.tech/BlogApiDB?sslmode=require&channel_binding=require
+    username: neondb_owner # 您的 Neon 帳號
+    password: npg_QXgfHmO7na2K # 您的 Neon 密碼
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        # Dialect 改成 PostgreSQL
+        dialect: org.hibernate.dialect.PostgreSQLDialect
