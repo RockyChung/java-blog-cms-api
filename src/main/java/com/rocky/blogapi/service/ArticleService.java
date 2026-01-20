@@ -8,6 +8,9 @@ import com.rocky.blogapi.repository.ArticleRepository;
 import com.rocky.blogapi.repository.CategoryRepository;
 import com.rocky.blogapi.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,5 +51,18 @@ public class ArticleService {
 
         // 4. 存入資料庫
         return articleRepository.save(article);
+    }
+
+
+    // 1. 查詢單篇文章 (給詳情頁用)
+    public Article getArticleById(Long id) {
+        return articleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("文章不存在 ID: " + id));
+    }
+
+    // 2. 查詢文章列表 (給首頁用，支援分頁)
+    // Page<Article> 比 List<Article> 更高級，它會包含 "總共幾頁"、"總共幾筆" 等資訊
+    public Page<Article> getArticles(Pageable pageable){
+        return articleRepository.findAll(pageable);
     }
 }
