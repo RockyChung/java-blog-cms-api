@@ -4,7 +4,7 @@ spring:
     # 注意：Neon 強制要求 SSL，所以後面一定要加 ?sslmode=require
     url: jdbc:postgresql://ep-cold-breeze-a16jmu1p.ap-southeast-1.aws.neon.tech/BlogApiDB?sslmode=require&channel_binding=require
     username: neondb_owner # 您的 Neon 帳號
-    password: npg_QXgfHmO7na2K # 您的 Neon 密碼
+    password: ENC(5cfMUAiNIO/Ezhk13+S4i8uQgSY05RdrcUI7JdvWW1Eoa7WlyIsmxeJurdxJ/J1TNcCC22rFYndlqlfXY0lhkw==) # 您的 Neon 密碼
     driver-class-name: org.postgresql.Driver
 
   jpa:
