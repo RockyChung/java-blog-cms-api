@@ -16,3 +16,9 @@ spring:
         format_sql: true
         # Dialect 改成 PostgreSQL
         dialect: org.hibernate.dialect.PostgreSQLDialect
+# 自定義的 JWT 設定
+jwt:
+  # 密鑰 (這串字串要夠長，至少 32 個字元，不然程式會報錯說不安全)
+  secret: MySuperSecretKeyForSpringSecurityTutorial2026
+  # 過期時間 (毫秒)，這裡設為 24 小時 (86400000)
+  expiration: 86400000
