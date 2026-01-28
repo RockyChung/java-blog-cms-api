@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:sqlserver://10.1.243.40:1433;databaseName=IDPDB;encrypt=true;trustServerCertificate=true
+    username: IDP
+    password: ENC(jsd01sjM1S6PQKI6ZjiJgyi0w8iiEZWwzSWriNRWGqUR0FggiitUhsUPYmbxq2Eb) #HP+tXRXQqA
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  jpa:
+    hibernate:
+      ddl-auto: update          # 開發期可用 update，上線建議改為 validate / none 並用 Flyway/Liquibase 管理
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.SQLServerDialect
