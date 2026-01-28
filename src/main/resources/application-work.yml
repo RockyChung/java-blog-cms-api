@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    # 1. URL 格式完全不同 (記得改 IP 和 databaseName)
+    # encrypt=true;trustServerCertificate=true 是解決 SSL 憑證報錯的關鍵
+    # jdbc:sqlserver://localhost:1433;databaseName=您的資料庫名稱;encrypt=true;trustServerCertificate=true;
+    url: jdbc:sqlserver://rocky-blog.database.windows.net:1433;database=free-sql-db-8788767;user=rockyDB@rocky-blog;password={your_password_here};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+
+    # 2. Driver 類別名稱換了
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+    username: 您的MSSQL帳號
+
+    # 3. 這裡要填入「新的」加密密碼 (請用 JasyptTest 重新算一組)
+    password: ENC(byvjl/tazc/XRChZ2pf6WDfxj7pO8jHx)
+
+  jpa:
+    properties:
+      hibernate:
+        # 4. 告訴 Hibernate 改說 MS SQL 的方言
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+        format_sql: true
+    hibernate:
+      # 開發階段可以用 update，正式環境建議 validate
+      ddl-auto: update
+# 自定義的 JWT 設定
+jwt:
+  # 密鑰 (這串字串要夠長，至少 32 個字元，不然程式會報錯說不安全)
+  secret: MySuperSecretKeyForSpringSecurityTutorial2026
+  # 過期時間 (毫秒)，這裡設為 24 小時 (86400000)
+  expiration: 86400000

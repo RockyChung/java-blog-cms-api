@@ -17,8 +17,11 @@ public class Article extends BaseEntity {
     @Column(length = 200)
     private String summary;
 
-    // 【關鍵】PostgreSQL 的 Text 類型，可以存很長的文章
-    @Column(columnDefinition = "TEXT", nullable = false)
+    // 不要寫 columnDefinition = "TEXT" (這是 PG 專用)
+    // 改用 length，這樣 Hibernate 會自動翻譯：
+    // 在 Postgres -> TEXT
+    // 在 MS SQL -> VARCHAR(MAX)
+    @Column(length = 100000, nullable = false)
     private String content;
 
     // 瀏覽量 (預設 0)
