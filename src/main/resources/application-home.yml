@@ -1,17 +1,11 @@
 spring:
   datasource:
     # 1. URL 格式完全不同 (記得改 IP 和 databaseName)
-    # encrypt=true;trustServerCertificate=true 是解決 SSL 憑證報錯的關鍵
-     url: jdbc:sqlserver://rocky-blog.database.windows.net:1433;database=free-sql-db-8788767;user=rockyDB@rocky-blog;password=?????;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
-#    url: jdbc:sqlserver://rocky-blog.database.windows.net:1433;databaseName=free-sql-db-8788767;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+    url: jdbc:sqlserver://rocky-blog.database.windows.net:1433;databaseName=free-sql-db-8788767;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+    username: rockyDB@rocky-blog
+    password: 123123
     # 2. Driver 類別名稱換了
-     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-
-#    username: rockydb
-
-    # 3. 這裡要填入「新的」加密密碼 (請用 JasyptTest 重新算一組)
-#    ENC(byvjl/tazc/XRChZ2pf6WDfxj7pO8jHx)
-#    password: 1qaz@WSX
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
   jpa:
     properties:
