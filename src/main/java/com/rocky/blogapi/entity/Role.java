@@ -3,6 +3,7 @@ package com.rocky.blogapi.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.Nationalized;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -16,6 +17,8 @@ public class Role extends BaseEntity {
     private String name;
 
     // 中文描述，例如：系統管理員
+    // 增加@Nationalized 支援中文
+    @Nationalized
     @Column(length = 50)
     private String description;
 }

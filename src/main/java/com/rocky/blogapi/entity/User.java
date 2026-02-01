@@ -3,6 +3,7 @@ package com.rocky.blogapi.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.Nationalized;
 
 @Data
 @EqualsAndHashCode(callSuper = true) // 讓 Lombok 知道要包含父類的欄位
@@ -19,6 +20,8 @@ public class User extends BaseEntity {
     @Column(length = 100)
     private String email;
 
+    // 增加@Nationalized 支援中文
+    @Nationalized
     @Column(name = "nick_name", length = 50)
     private String nickName;
 

@@ -16,6 +16,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -52,27 +57,41 @@ public class SecurityConfig {
 
     // 4. 核心過濾鏈 (Security Filter Chain)
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // 關閉 CSRF (因為我們是 API，不是傳統網頁)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 設定為無狀態 (JWT 必備)
-
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // 啟用 CORS
                 .authorizeHttpRequests(auth -> auth
-                        // 公開的端點 (不需登入)
-                        .requestMatchers("/api/auth/**").permitAll() // 登入註冊
-                        .requestMatchers(HttpMethod.GET, "/api/articles/**").permitAll() // 看文章
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll() // Swagger 文件
+                        .requestMatchers("/api/auth/**").permitAll() // 開放登入註冊
+                        .anyRequest().authenticated() // 其他都要登入
+                )
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-                        // 其他所有請求都需要登入
-                        .anyRequest().authenticated()
-                );
-
-        // 把我們的 JWT Filter 加在 UsernamePasswordAuthenticationFilter 之前
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
-        // 設定 Provider
-        http.authenticationProvider(authenticationProvider());
+                // 6. 這裡改成呼叫 authenticationProvider() 方法
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        // 1. 允許的前端網址 (請換成您 Vue 的網址)
+        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+
+        // 2. 允許的 HTTP 方法
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
+        // 3. 允許的 Header (例如 Authorization, Content-Type)
+        configuration.setAllowedHeaders(List.of("*"));
+
+        // 4. 是否允許攜帶憑證 (如 Cookies)
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration); // 套用到所有路徑
+        return source;
     }
 }

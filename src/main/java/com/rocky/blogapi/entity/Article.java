@@ -3,6 +3,8 @@ package com.rocky.blogapi.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.Nationalized;
+
 import java.util.Set;
 
 @Data
@@ -11,16 +13,18 @@ import java.util.Set;
 @Table(name = "article")
 public class Article extends BaseEntity {
 
+    // 增加@Nationalized 支援中文
+    @Nationalized
     @Column(nullable = false, length = 100)
     private String title;
 
+    // 增加@Nationalized 支援中文
+    @Nationalized
     @Column(length = 200)
     private String summary;
 
-    // 不要寫 columnDefinition = "TEXT" (這是 PG 專用)
-    // 改用 length，這樣 Hibernate 會自動翻譯：
-    // 在 Postgres -> TEXT
-    // 在 MS SQL -> VARCHAR(MAX)
+    // 增加@Nationalized 支援中文
+    @Nationalized
     @Column(length = 100000, nullable = false)
     private String content;
 
