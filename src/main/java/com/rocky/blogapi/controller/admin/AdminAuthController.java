@@ -1,8 +1,8 @@
-package com.rocky.blogapi.controller;
+package com.rocky.blogapi.controller.admin;
 
 import com.rocky.blogapi.common.Result;
-import com.rocky.blogapi.dto.LoginDto;
-import com.rocky.blogapi.dto.RegisterDto;
+import com.rocky.blogapi.dto.admin.LoginDto;
+import com.rocky.blogapi.dto.admin.RegisterDto;
 import com.rocky.blogapi.entity.Role;
 import com.rocky.blogapi.entity.User;
 import com.rocky.blogapi.repository.RoleRepository;
@@ -11,6 +11,7 @@ import com.rocky.blogapi.security.JwtUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,9 +27,10 @@ import java.util.Map;
 
 @Tag(name = "認證管理", description = "提供登入與註冊功能")
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/admin/auth")
 @RequiredArgsConstructor
-public class AuthController {
+@Slf4j
+public class AdminAuthController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
@@ -44,11 +46,16 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword())
         );
 
+        //顯示登入人員
+        log.info(" ===== START Login Processing ===== ");
+        log.info(" ===== LoginID: {} ===== ", loginDto.getUsername());
+
         String token = jwtUtils.generateToken(loginDto.getUsername());
         Map<String, String> response = new HashMap<>();
         response.put("token", token);
         response.put("username", loginDto.getUsername());
 
+        log.info(" ===== END Login Processing ===== ");
         return Result.success(response);
     }
 
@@ -57,8 +64,14 @@ public class AuthController {
     @PostMapping("/register")
     public Result<String> register(@RequestBody RegisterDto registerDto) {
 
+        log.info(" ===== START Register Processing ===== ");
+        log.info(" ===== RegisterID: {} ===== ", registerDto.getUsername());
+        log.info(" ===== RegisterEmail: {} ===== ", registerDto.getEmail());
+        log.info(" ===== RegisterNickname: {} ===== ", registerDto.getNickname());
+
         // 1. 檢查帳號是否已存在
         if (userRepository.existsByUsername(registerDto.getUsername())) {
+            log.info(" ===== 使用者:{} 已存在 ===== ",registerDto.getUsername());
             return Result.error("錯誤：使用者名稱已被使用！");
         }
 
@@ -86,6 +99,7 @@ public class AuthController {
         // 6. 存入資料庫
         userRepository.save(user);
 
+        log.info(" ===== END Register Processing ===== ");
         return Result.success("註冊成功！請嘗試登入");
     }
 }

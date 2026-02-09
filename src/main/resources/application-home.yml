@@ -1,9 +1,16 @@
 spring:
   datasource:
     # 1. URL 格式完全不同 (記得改 IP 和 databaseName)
-    url: jdbc:sqlserver://rocky-blog.database.windows.net:1433;databaseName=free-sql-db-8788767;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
-    username: rockyDB@rocky-blog
-    password: 123123
+    # 1.AzureDB
+#    url: jdbc:sqlserver://rocky-blog.database.windows.net:1433;databaseName=free-sql-db-8788767;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+#    username: rockyDB@rocky-blog
+#    password: 1qaz@WSX
+
+    # 1.改本機的 MS SQL
+    url: jdbc:sqlserver://localhost:1433;databaseName=blog_db;encrypt=false;trustServerCertificate=true
+    username: sa
+    password: YourStrongPassword123
+
     # 2. Driver 類別名稱換了
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 

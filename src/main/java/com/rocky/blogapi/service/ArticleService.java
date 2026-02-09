@@ -1,6 +1,6 @@
 package com.rocky.blogapi.service;
 
-import com.rocky.blogapi.dto.ArticleDto;
+import com.rocky.blogapi.dto.app.ArticleDto;
 import com.rocky.blogapi.entity.Article;
 import com.rocky.blogapi.entity.Category;
 import com.rocky.blogapi.entity.Tag;
@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor // Lombok 神技：自動把 final 的變數生成建構子注入 (取代 @Autowired)

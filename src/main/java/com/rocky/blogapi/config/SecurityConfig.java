@@ -62,9 +62,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // 啟用 CORS
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll() // 開放登入註冊
+                        .requestMatchers("/api/adm/auth/**").permitAll() // 開放登入註冊
                         // 👇【新增這行】允許所有人 "讀取" 文章 (注意是用 GET)
-                        .requestMatchers(HttpMethod.GET, "/api/articles/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/web/articles/**").permitAll()
                         .anyRequest().authenticated() // 其他都要登入
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

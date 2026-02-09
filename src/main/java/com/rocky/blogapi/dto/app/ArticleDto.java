@@ -1,4 +1,4 @@
-package com.rocky.blogapi.dto;
+package com.rocky.blogapi.dto.app;
 
 import lombok.Data;
 import java.util.Set;
