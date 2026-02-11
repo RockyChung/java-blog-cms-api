@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,10 +41,11 @@ public class AdminAuthController {
     @Operation(summary = "使用者登入")
     @PostMapping("/login")
     public Result<Map<String, String>> login(@RequestBody LoginDto loginDto) {
-        Authentication authentication = authenticationManager.authenticate(
+        authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword())
         );
 
+        log.info("");
         //顯示登入人員
         log.info(" ===== START Login Processing ===== ");
         log.info(" ===== LoginID: {} ===== ", loginDto.getUsername());

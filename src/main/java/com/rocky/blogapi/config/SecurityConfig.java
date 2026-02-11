@@ -66,6 +66,7 @@ public class SecurityConfig {
                         // 👇【新增這行】允許所有人 "讀取" 文章 (注意是用 GET)
                         .requestMatchers(HttpMethod.GET, "/api/web/articles/**").permitAll()
                         .requestMatchers(
+                                "/api/admin/articles/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html"
