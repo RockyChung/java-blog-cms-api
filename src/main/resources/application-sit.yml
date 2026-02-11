@@ -2,13 +2,13 @@ spring:
   datasource:
     # 1. URL 格式完全不同 (記得改 IP 和 databaseName)
     # JDBC URL 格式：jdbc:postgresql://<host>:<port>/<database>
-    url: jdbc:postgresql://localhost:5432/rockydb
+    url: jdbc:postgresql://ep-sweet-hat-a1zth8g8.ap-southeast-1.aws.neon.tech/rockydb?sslmode=require&channel_binding=require
     # 2. Driver 類別名稱換了
     driver-class-name: org.postgresql.Driver
     # 3. 這裡要填入您的 Postgresql 帳號
-    username: rockydev
+    username: neondb_owner
     # 3. 這裡要填入「新的」加密密碼（請用 JasyptTest 重新算一組）
-    password: 1qaz@WSX
+    password: npg_zNVKQxc80taB
 
   jpa:
     properties:

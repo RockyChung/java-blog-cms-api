@@ -5,7 +5,6 @@ import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import java.time.LocalDateTime;
 
 @Data
@@ -25,8 +24,7 @@ public abstract class BaseEntity {
     @Column(name = "update_time")
     private LocalDateTime updateTime;
 
-    // 【這裡就是您要的邏輯刪除欄位】
-    // PostgreSQL 會自動對應成 BOOLEAN 型態，不需要寫 columnDefinition
-    @Column(name = "is_deleted")
+    // 邏輯刪除欄位 - PostgreSQL BOOLEAN 類型
+    @Column(name = "is_deleted", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private Boolean isDeleted = false;
 }

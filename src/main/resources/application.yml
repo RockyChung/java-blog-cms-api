@@ -1,4 +1,4 @@
 spring:
   profiles:
     # 這裡指定要啟動哪個環境，以後切換成 prod 只要改這裡
-    active: home
+    active: sit

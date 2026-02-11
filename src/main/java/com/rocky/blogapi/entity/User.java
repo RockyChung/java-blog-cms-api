@@ -3,7 +3,7 @@ package com.rocky.blogapi.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.Nationalized;
+import java.util.Set;
 
 @Data
 @EqualsAndHashCode(callSuper = true) // 讓 Lombok 知道要包含父類的欄位
@@ -20,12 +20,12 @@ public class User extends BaseEntity {
     @Column(length = 100)
     private String email;
 
-    // 增加@Nationalized 支援中文
-    @Nationalized
+    // PostgreSQL 原生支援 UTF-8，可直接儲存中文
     @Column(name = "nick_name", length = 50)
     private String nickName;
 
-    // 狀態 (true:啟用, false:停用)
+    // 狀態 (true:啟用, false:停用) - PostgreSQL BOOLEAN 類型
+    @Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
     private Boolean enabled = true;
 
     // 【新增這段】
@@ -36,5 +36,5 @@ public class User extends BaseEntity {
             joinColumns = @JoinColumn(name = "user_id"), // 這一邊的 FK
             inverseJoinColumns = @JoinColumn(name = "role_id") // 另一邊的 FK
     )
-    private java.util.Set<Role> roles;
+    private Set<Role> roles;
 }

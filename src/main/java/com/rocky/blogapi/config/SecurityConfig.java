@@ -62,9 +62,14 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // 啟用 CORS
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/adm/auth/**").permitAll() // 開放登入註冊
+                        .requestMatchers("/api/admin/auth/**").permitAll() // 開放登入註冊
                         // 👇【新增這行】允許所有人 "讀取" 文章 (注意是用 GET)
                         .requestMatchers(HttpMethod.GET, "/api/web/articles/**").permitAll()
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html"
+                        ).permitAll()
                         .anyRequest().authenticated() // 其他都要登入
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
